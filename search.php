@@ -1,6 +1,6 @@
 <?php
 include("includes/header.html");
-    ?>
+?>
 
 <div class="grid-container">
     <table class="table">
@@ -23,8 +23,11 @@ include("includes/header.html");
 
                 $errors = array();
                 $tradesmen = new Tradesman();
+                if ((empty($_GET['trade']) && empty($_GET['location'])) && isset($_GET['work_date'])) {
+                    $errors[] = 'Enter trade type or location to find a trader';
+                }
                 if (isset($_GET['trade'])) {
-                   
+
                     $tradesmen->setTradeType(strtolower(trim($_GET['trade'])));
                 }
                 if (isset($_GET['location'])) {
@@ -33,28 +36,39 @@ include("includes/header.html");
                 }
                 if (isset($_GET['work_date'])) {
                     $searchDate = $_GET['work_date'];
-                    echo $searchDate;
                 }
-                $resultList = $tradesmen->searchTradesmen($tradesmen->getTradeType(), $tradesmen->getLocation(), $searchDate);
-                if (!$resultList) {
-                    echo "<h2> No results found!</h2>";
-                } else {
-                    echo '<table class="table table-bordered">';
-                    //loop tradesmen data
-                    for ($i = 0; $i < count($resultList); $i++) {
-                        $tardesman = $resultList[$i];
-                        echo '<tr>'
-                            . '<td>' . $tardesman->getFName() . '</td>'
-                            . '<td>' . $tardesman->getLName() . '</td>'
-                            . '<td>' . $tardesman->getEmail() . '</td>'
-                            . '<td>' . $tardesman->getTradeType() . '</td>'
-                            . '<td>' . $tardesman->getHourlyRate() . '</td>'
-                            . '<td>' . $tardesman->getSkills() . '</td>'
-                            . '<td>' . $tardesman->getAvailability() . '</td>'
-                            . '</tr>';
-                    }
-                    echo '</table>';
+                if (empty($errors)) {
+                    $resultList = $tradesmen->searchTradesmen($tradesmen->getTradeType(), $tradesmen->getLocation(), $searchDate);
+                    if (!$resultList) {
+                        echo "<h2> No results found!</h2>";
+                    } else {
+                        echo '<table class="table table-bordered">';
+                        //loop tradesmen data
+                        for ($i = 0; $i < count($resultList); $i++) {
+                            $tardesman = $resultList[$i];
+                            echo '<tr>'
+                                . '<td>' . $tardesman->getFName() . '</td>'
+                                . '<td>' . $tardesman->getLName() . '</td>'
+                                . '<td>' . $tardesman->getEmail() . '</td>'
+                                . '<td>' . $tardesman->getTradeType() . '</td>'
+                                . '<td>' . $tardesman->getHourlyRate() . '</td>'
+                                . '<td>' . $tardesman->getSkills() . '</td>';
+                            if ($tardesman->getAvailability() == 1) {
+                                echo '<td><button class="available" type="button" disabled>Available</button></td>';
+                            } else {
 
+                                echo '<td><button class="not-available" type="button" disabled>Booked</button></td>';
+                            }
+                            //echo '<td>' . $tardesman->getAvailability() . '</td>'
+                            echo '</tr>';
+                        }
+                        echo '</table>';
+
+                    }
+                } else {
+                    foreach ($errors as $msg) {
+                        echo " - $msg<br>";
+                    }
                 }
 
             }
@@ -65,4 +79,4 @@ include("includes/header.html");
 
 <?php
 include("includes/footer.html");
-    ?>
+?>

@@ -106,6 +106,17 @@ a {
 a:hover {
   background-color: #eee;
 }
+.available {
+  background-color: rgb(106, 180, 106);
+  color: black;
+  width: 70px;
+}
+
+.not-available {
+  background-color: rgb(243, 92, 92);
+  color: black;
+  width: 70px;
+}
 
 html,
 body {

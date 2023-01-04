@@ -74,7 +74,7 @@ class Tradesman extends User
         //add to DB
         //get user id from session
     }
-   
+
     public function getAvailability()
     {
         return $this->availability;
@@ -132,18 +132,11 @@ class Tradesman extends User
             $condition = "location = \"$location\" ";
 
         }
-        if (!empty($date)) {
-           // $inner = " AND t.user_id NOT IN (SELECT * FROM schedule s WHERE CAST(s.booked_date AS CHAR(10)) != $date)";
-           $isAvailable = checkAvailability($date);
-        } else {
-            $isAvailable = true;
-        }
 
-        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,u.first_name,u.last_name,u.email 
+        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,u.last_name,u.email 
         FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE $condition $inner ;";
-        echo $q;
         $result = mysqli_query($this->getDbc(), $q);
-        
+
         $tradesmen_array = array();
         if (null != $result && $result->num_rows > 0) {
 
@@ -157,7 +150,14 @@ class Tradesman extends User
                 $tradesman->setLocation($row['location']);
                 $tradesman->setHourlyRate($row['hourly_rate']);
                 $tradesman->setSkills($row['skills']);
-               
+
+                if (!empty($date)) {
+                    // $inner = " AND t.user_id NOT IN (SELECT * FROM schedule s WHERE CAST(s.booked_date AS CHAR(10)) != $date)";
+                    $isAvailable = $this->checkAvailability($date, $row['user_id']);
+                } else {
+                    $isAvailable = true;
+                }
+
                 $tradesman->setAvailability($isAvailable);
                 $tradesmen_array[] = $tradesman;
 
@@ -171,11 +171,19 @@ class Tradesman extends User
     {
 
     }
-private function checkAvailability($date) {
-    //sql query to find dates booked
-    $isAvailable = false;
-    return $isAvailable;
-}
+    private function checkAvailability($date, $id)
+    {
+        //sql query to find dates booked
+        $q = "SELECT * FROM schedule WHERE user_id = $id AND booked_date = '$date';";
+        $result = mysqli_query($this->getDbc(), $q);
+        if (null != $result && $result->num_rows > 0) {
+            $isAvailable = false;
+        } else {
+
+            $isAvailable = true;
+        }
+        return $isAvailable;
+    }
 
 }
 ?>
