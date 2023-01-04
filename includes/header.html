@@ -17,20 +17,31 @@
     <li><a href="#">Find Work</a></li>
     <li><a href="contactus.html">Contact Us</a></li>
     <li>
-      <form action="search.php" method="get">
-        <input type="text" name="q" placeholder="Search...">
-        <button type="submit">Search</button>
-      </form>
-    </li>
     <form method="post" action="register_user.php">
       <input type="submit" value="Sign Up">
     </form>
+  </li>
+  <li>
     <form method="post" action="register_tradesman.php">
       <input type="submit" value="Trader Sign Up">
     </form>
-
+  </li>
+  <li>
+    <form method="post" action="login.php">
+      <input type="submit" value="Login">
+    </form>
+  </li>
   </ul>
-
+<ul>
+  <li>
+    <form class="search_form" action="search.php" method="get">
+      <input type="text" name="trade" placeholder="Trade (e.g. Electrician)">
+      <input type="text" name="location" placeholder="Location (e.g. Sheffield)">
+      <input type="date" name="work_date">
+      <button type="submit">Search</button>
+    </form>
+  </li>
+</ul>
 
 
 
@@ -39,7 +50,7 @@
   page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
   teal, blue, blurple, magenta, pink!
   -->
-  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
+  <!-- <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script> -->
 </body>
 
 </html>
