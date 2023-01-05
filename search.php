@@ -13,6 +13,7 @@ include("includes/header.html");
                 <th scope="col">Hourly Rate (£)</th>
                 <th scope="col">Skills</th>
                 <th scope="col">Availability</th>
+                <th scope="col"> </th>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +46,7 @@ include("includes/header.html");
                         echo '<table class="table table-bordered">';
                         //loop tradesmen data
                         for ($i = 0; $i < count($resultList); $i++) {
+                            
                             $tardesman = $resultList[$i];
                             echo '<tr>'
                                 . '<td>' . $tardesman->getFName() . '</td>'
@@ -59,6 +61,12 @@ include("includes/header.html");
 
                                 echo '<td><button class="not-available" type="button" disabled>Booked</button></td>';
                             }
+                            
+                            echo '<td>'
+                            .'<form action="view_tradesmen_profile.php" method="post">'
+                            .'<button name="view-id" type="submit" value="'.$tardesman->getUId().'">View</button>'
+                            .'</form>'
+                            .'</td>';
                             //echo '<td>' . $tardesman->getAvailability() . '</td>'
                             echo '</tr>';
                         }

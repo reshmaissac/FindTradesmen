@@ -85,12 +85,12 @@ class Tradesman extends User
         $this->availability = $availability;
         return $this;
     }
-    public function createProfile()
+    public function createAccount()
     {
         //1. insert into users table
         //2. get userid
         //3. insert into tradesman table with userid as FK.
-        if ($this->createAccount()) {
+        if (parent ::createAccount()) {
             $id = mysqli_insert_id($this->getDbc());
             $this->setUId($id);
             $tId = $id;
@@ -108,7 +108,17 @@ class Tradesman extends User
     }
     public function retrieveProfile($tId)
     {
+        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,u.last_name,u.email 
+        FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE t.user_id = $tId ;";
+        //echo $q;
+        $result = mysqli_query($this->getDbc(), $q);
+        if (null != $result && $result->num_rows > 0) {
 
+            while ($row = $result->fetch_assoc()) {
+                $this->setValues($this, $row, null);
+            }
+        }
+        return $this;
     }
     public function updateProfile($tId)
     {
@@ -118,6 +128,21 @@ class Tradesman extends User
     public function deleteProfile($tId)
     {
 
+    }
+    private function setValues($tradesman, $row, $isAvailable)
+    {
+        $tradesman->setUId($row['user_id']);
+        $tradesman->setFName($row['first_name']);
+        $tradesman->setLName($row['last_name']);
+        $tradesman->setEmail($row['email']);
+        $tradesman->setTradeType($row['trade_type']);
+        $tradesman->setLocation($row['location']);
+        $tradesman->setHourlyRate($row['hourly_rate']);
+        $tradesman->setSkills($row['skills']);
+        if (null != $isAvailable) {
+
+            $tradesman->setAvailability($isAvailable);
+        }
     }
     public function searchTradesmen($tradeType, $location, $date)
     {
@@ -143,22 +168,14 @@ class Tradesman extends User
 
             while ($row = $result->fetch_assoc()) {
                 $tradesman = new Tradesman();
-                $tradesman->setFName($row['first_name']);
-                $tradesman->setLName($row['last_name']);
-                $tradesman->setEmail($row['email']);
-                $tradesman->setTradeType($row['trade_type']);
-                $tradesman->setLocation($row['location']);
-                $tradesman->setHourlyRate($row['hourly_rate']);
-                $tradesman->setSkills($row['skills']);
-
                 if (!empty($date)) {
                     // $inner = " AND t.user_id NOT IN (SELECT * FROM schedule s WHERE CAST(s.booked_date AS CHAR(10)) != $date)";
                     $isAvailable = $this->checkAvailability($date, $row['user_id']);
                 } else {
                     $isAvailable = true;
                 }
+                $this->setValues($tradesman, $row, $isAvailable);
 
-                $tradesman->setAvailability($isAvailable);
                 $tradesmen_array[] = $tradesman;
 
             }

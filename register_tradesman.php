@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	//if no errors, insert data to db
 	if (empty($errors)) {
 
-		if ($tradesman->createProfile()) {
+		if ($tradesman->createAccount()) {
 			echo '<h1>Registered!</h1>
 				<p>You are now registered.</p>
 				<p><a href="login.php">Login</a></p>';
