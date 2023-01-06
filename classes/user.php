@@ -64,8 +64,8 @@ class User extends DBConnection
     }
     public function setPassword($var1)
     {
-        $hash = password_hash($var1, PASSWORD_DEFAULT);
-        $this->password = $hash;
+        //$hash = password_hash($var1, PASSWORD_DEFAULT);
+        $this->password = $var1;
     }
     public function getPassword()
     {
@@ -81,7 +81,7 @@ class User extends DBConnection
         $contact = $this->dbc->real_escape_string($this->getContactNo());
         $pswd = $this->dbc->real_escape_string($this->getPassword());
         $q = "INSERT INTO users (first_name, last_name, email, contact_no, pass, reg_date) 
-						 VALUES ('$fname', '$lname', '$e', '$contact', '$pswd', NOW() )";
+						 VALUES ('$fname', '$lname', '$e', '$contact', SHA1('$pswd'), NOW() )";
         $r = $this->dbc->query($q);
         // $this->dbc->close();
         return $r;
@@ -95,9 +95,21 @@ class User extends DBConnection
         return $r;
     }
 
-    public function login()
+    public function login($e, $p)
     {
-
+        $e = $this->dbc->real_escape_string($e);
+        $p = $this->dbc->real_escape_string($p);
+        $q = "SELECT user_id, first_name, last_name 
+        FROM users 
+        WHERE email='$e' AND pass=SHA1('$p')";
+        echo $q;
+        $r = $this->dbc->query($q);
+        if ($r->num_rows == 1) {
+            $row = $r->fetch_array(MYSQLI_ASSOC);
+            return array(true, $row);
+        } else {
+            return array(false, null);
+        }
     }
 }
 ?>
