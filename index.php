@@ -12,16 +12,24 @@
 
     echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
 
+    if ($_SESSION['actor']['is_tradesman'] == 1) {
+
+      echo '<a href="view_tradesmen_profile.php">
+      <input class="css-input-btn-login" type="submit" value="View Profile"/>
+  </a>';
+
+    }
+
   } else {
     include('includes/header.html');
-    require('login_tools.php');
-    load();
-
+    // require('login_tools.php');
+    //load();
+  
     //include('includes/header.html');
   }
 
 
-?>
+  ?>
 
 
   <div class="row">

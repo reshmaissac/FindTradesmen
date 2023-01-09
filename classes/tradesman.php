@@ -90,7 +90,7 @@ class Tradesman extends User
         //1. insert into users table
         //2. get userid
         //3. insert into tradesman table with userid as FK.
-        if (parent ::createAccount()) {
+        if (parent::createAccount()) {
             $id = mysqli_insert_id($this->getDbc());
             $this->setUId($id);
             $tId = $id;
@@ -108,7 +108,8 @@ class Tradesman extends User
     }
     public function retrieveProfile($tId)
     {
-        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,u.last_name,u.email 
+        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,
+        u.last_name,u.email, u.contact_no
         FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE t.user_id = $tId ;";
         //echo $q;
         $result = mysqli_query($this->getDbc(), $q);
@@ -122,6 +123,18 @@ class Tradesman extends User
     }
     public function updateProfile($tId)
     {
+        $tType = $this->getDbc()->real_escape_string($this->getTradeType());
+        $loc = $this->getDbc()->real_escape_string($this->getLocation());
+        $hrRate = $this->getDbc()->real_escape_string($this->getHourlyRate());
+        $skill = $this->getDbc()->real_escape_string($this->getSkills());
+        $q = "UPDATE tradesmen
+        SET trade_type = '$tType', location = '$loc', hourly_rate = $hrRate, skills = '$skill'
+        WHERE user_id = $tId;";
+        $r = $this->getDbc()->query($q);
+
+        // $this->dbc->close();
+        return $r;
+
 
     }
 
@@ -135,6 +148,7 @@ class Tradesman extends User
         $tradesman->setFName($row['first_name']);
         $tradesman->setLName($row['last_name']);
         $tradesman->setEmail($row['email']);
+        $tradesman->setContactNo($row['contact_no']);
         $tradesman->setTradeType($row['trade_type']);
         $tradesman->setLocation($row['location']);
         $tradesman->setHourlyRate($row['hourly_rate']);
@@ -158,7 +172,8 @@ class Tradesman extends User
 
         }
 
-        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,u.last_name,u.email 
+        $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,
+        u.last_name,u.email,u.contact_no
         FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE $condition $inner ;";
         $result = mysqli_query($this->getDbc(), $q);
 

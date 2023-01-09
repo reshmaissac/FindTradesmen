@@ -2,9 +2,7 @@
     <?php include("includes/header.html");
     include("classes/user.php");
 
-
     ?>
-
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -41,9 +39,7 @@
                 //header('location:home.php');
                 if ($_SESSION['actor']['is_tradesman'] == 1) {
                     load('view_tradesmen_profile.php');
-                    //header('Location: /view_tradesmen_profile.php');
                 } else {
-                    
 
                     load('index.php');
                 }
