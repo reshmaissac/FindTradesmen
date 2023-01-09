@@ -13,7 +13,7 @@ include("includes/header.html");
                 <th scope="col">Hourly Rate (£)</th>
                 <th scope="col">Skills</th>
                 <th scope="col">Availability</th>
-                <th scope="col"> </th>
+                <th scope="col">View</th>
             </tr>
         </thead>
         <tbody>

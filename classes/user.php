@@ -9,6 +9,7 @@ class User extends DBConnection
     private $email;
     private $contactNo;
     private $password;
+    private $isTradesman;
     private $dbc;
 
     public function getDbc()
@@ -97,19 +98,40 @@ class User extends DBConnection
 
     public function login($e, $p)
     {
+        $errors = array();
         $e = $this->dbc->real_escape_string($e);
         $p = $this->dbc->real_escape_string($p);
-        $q = "SELECT user_id, first_name, last_name 
+        $q = "SELECT user_id, first_name, last_name, is_tradesman 
         FROM users 
         WHERE email='$e' AND pass=SHA1('$p')";
-        echo $q;
+        //echo $q;
         $r = $this->dbc->query($q);
         if ($r->num_rows == 1) {
             $row = $r->fetch_array(MYSQLI_ASSOC);
             return array(true, $row);
         } else {
-            return array(false, null);
+
+            $errors[] = 'Email address and password not found.';
+            return array(false, $errors);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsTradesman()
+    {
+        return $this->isTradesman;
+    }
+
+    /**
+     * @param mixed $isTradesman 
+     * @return self
+     */
+    public function setIsTradesman($isTradesman): self
+    {
+        $this->isTradesman = $isTradesman;
+        return $this;
     }
 }
 ?>

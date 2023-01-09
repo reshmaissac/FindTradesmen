@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Tradesmen</title>
+  <title> <?php echo $page_title; ?></title>
   <link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -30,16 +30,11 @@
     </li>
 
     <li style="padding-left: 20px;">
-      <form method="get" action="login.php">
-        <input type="submit" class="css-input-btn-login" value="Login">
+      <form method="post" action="logout.php">
+        <input type="submit" class="css-input-btn-logout" value="Logout">
       </form>
     </li>
 
-    <li style="padding-left: 5px;">
-      <form method="post" action="register.php">
-        <input type="submit" class="css-input-btn-signup" value="Sign Up">
-      </form>
-    </li>
 
     <!--   <li>
     <form method="post" action="register_tradesman.php">
