@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include "classes/user.php";
 	$errors = array();
     $user = new User();
+	$user->setIsTradesman(0);
 
 	if (empty($_POST['first_name'])) {
 		$errors[] = 'Enter your first name.'; 
@@ -48,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	//check if email exists in db
 	if (empty($errors)) {
-		
 		$r = $user->checkIfUserExists();
 		$rowcount = $r->num_rows;
 		if ($rowcount != 0){
@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	//if no errors, insert data to db
 	if (empty($errors)) {
-        
 		if ($user->createAccount()) { 
 			echo '<h1>Registered!</h1>
 				<p>You are now registered.</p>
@@ -77,10 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		//$dbc->close();
 	}  
 	
-	
-	
-	
-
 	
 }
 ?>
