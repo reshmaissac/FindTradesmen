@@ -76,15 +76,16 @@ class User extends DBConnection
 
     public function createAccount()
     {
+        $isTrdman = $this->dbc->real_escape_string($this->getIsTradesman());
         $fname = $this->dbc->real_escape_string($this->getFName());
         $lname = $this->dbc->real_escape_string($this->getLName());
         $e = $this->dbc->real_escape_string($this->getEmail());
         $contact = $this->dbc->real_escape_string($this->getContactNo());
         $pswd = $this->dbc->real_escape_string($this->getPassword());
-        $q = "INSERT INTO users (first_name, last_name, email, contact_no, pass, reg_date) 
-						 VALUES ('$fname', '$lname', '$e', '$contact', SHA1('$pswd'), NOW() )";
+        $q = "INSERT INTO users (first_name, last_name, email, contact_no, pass, is_tradesman, reg_date) 
+						 VALUES ('$fname', '$lname', '$e', '$contact', SHA1('$pswd'),$isTrdman, NOW() )";
         $r = $this->dbc->query($q);
-        // $this->dbc->close();
+        
         return $r;
     }
     public function checkIfUserExists()

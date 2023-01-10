@@ -51,6 +51,11 @@
 		} else {
 			$tradesman->setHourlyRate(trim($_POST['hourly_rate']));
 		}
+		if (isset($_POST['prof_reg_no'])) {
+			$tradesman->setProfessionalRegNo(trim($_POST['prof_reg_no']));
+		} else {
+			$tradesman->setProfessionalRegNo(' ');
+		}
 		if (empty($_POST['skills'])) {
 			$errors[] = 'Enter your trade skills';
 		} else {
@@ -105,63 +110,7 @@
 
 	}
 	?>
-	<!-- Display body section with sticky form. -->
-	<!-- <form action="register_tradesman.php" method="post" class="form-signin" role="form">
-	<h2 class="form-signin-heading">Create an Account</h2>
-	<fieldset>
-		<legend class="form__legend">Your details</legend>
-		<input type="text" name="first_name" size="20"
-			value="<?php if (isset($_POST['first_name']))
-				echo $_POST['first_name']; ?>" placeholder="First Name">
-		<input type="text" name="last_name" size="20"
-			value="<?php if (isset($_POST['last_name']))
-				echo $_POST['last_name']; ?>" placeholder="Last Name">
-	</fieldset>
-	<fieldset>
-		<legend class="form__legend">Your contact details</legend>
-		<input type="text" name="email" size="50" value="<?php if (isset($_POST['email']))
-			echo $_POST['email']; ?>"
-			placeholder="Email Address">
-		<input type="text" name="contact_no" size="50"
-			value="<?php if (isset($_POST['contact_no']))
-				echo $_POST['contact_no']; ?>" placeholder="Contact No">
-	</fieldset>
-
-	<fieldset>
-		<legend class="form__legend">Your trade details</legend>
-		<label for="trade_types">Choose your trade:</label>
-		<select name="trade_types" id="trade_types">
-			<option value="electrician">Electrician</option>
-			<option value="plumber">Plumber</option>
-			<option value="builder">Builder</option>
-			<option value="carpenter">Carpenter</option>
-		</select>
-		<input type="text" name="location" size="50"
-			value="<?php if (isset($_POST['location']))
-				echo $_POST['location']; ?>"
-			placeholder="Your working location">
-		<input type="text" name="hourly_rate" size="50"
-			value="<?php if (isset($_POST['hourly_rate']))
-				echo $_POST['hourly_rate']; ?>" placeholder="Hourly rate">
-		<input type="text" name="skills" size="50" value="<?php if (isset($_POST['skills']))
-			echo $_POST['skills']; ?>"
-			placeholder="List your skills (eg. wiring, tiling)">
-	</fieldset>
-
-	<input type="password" name="pass1" size="20" value="<?php if (isset($_POST['pass1']))
-		echo $_POST['pass1']; ?>"
-		placeholder="Password">
-	<input type="password" name="pass2" size="20" value="<?php if (isset($_POST['pass2']))
-		echo $_POST['pass2']; ?>"
-		placeholder="Confirm Password">
-	<p><button class="btn btn-primary" name="submit" type="submit">Create</button></p>
-</form> -->
-
-
 	<!-- ............................................. -->
-
-
-
 
 	<div class="form-style">
 		<h1>Sign Up Now!<span>Looking for Works.</span></h1>
@@ -201,6 +150,8 @@
 					echo $_POST['location']; ?>" placeholder="Your working location">
 				<input type="text" name="hourly_rate" size="50" value="<?php if (isset($_POST['hourly_rate']))
 					echo $_POST['hourly_rate']; ?>" placeholder="Hourly rate">
+				<input type="text" name="prof_reg_no" size="50" value="<?php if (isset($_POST['prof_reg_no']))
+					echo $_POST['prof_reg_no']; ?>" placeholder="Professional Registration No (Optional)">
 				<input type="text" name="skills" size="50" value="<?php if (isset($_POST['skills']))
 					echo $_POST['skills']; ?>" placeholder="List your skills (eg. wiring, tiling)">
 

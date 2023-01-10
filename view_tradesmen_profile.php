@@ -23,12 +23,23 @@ if (
 <?php
 include "classes/tradesman.php";
 //get loggedin id and retrieve tradesmen profile.
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && ($_SESSION['actor']['is_tradesman'] == 0)) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (($_SESSION['actor']['is_tradesman'] == 0)) {
 
-  if (isset($_POST['view-id'])) {
-    $tId = $_POST['view-id'];
+    if (isset($_POST['view-id'])) {
+      $tId = $_POST['view-id'];
+    }
+    $isReadonly = 'readonly="readonly"';
+  } else {
+
+    echo "<br/><br/>You are logged in as a tradesman.  Please login as a user to search and view other tradesman profiles.";
+    echo '<a href="view_tradesmen_profile.php">
+    <input style="width:148px;" class="css-input-btn-login" type="submit" value="View Your Profile"/>
+</a>';
+
+    return;
   }
-  $isReadonly = 'readonly="readonly"';
+
 } else {
   $tId = $_SESSION['actor']['id'];
   $isReadonly = '';
@@ -40,6 +51,7 @@ $fName = $tradesman->getFName();
 $lName = $tradesman->getLName();
 $email = $tradesman->getEmail();
 $contact = $tradesman->getContactNo();
+$profRegNo = $tradesman->getProfessionalRegNo();
 $tType = $tradesman->getTradeType();
 $loc = $tradesman->getLocation();
 $hourlyRate = $tradesman->getHourlyRate();
@@ -60,10 +72,15 @@ $skills = $tradesman->getSkills();
           </div>
           <div class="card-body">
             <p class="mb-0"><strong class="pr-1">Tradesman ID:</strong> <?php echo $tId; ?> </p>
-            <p class="mb-0"><strong class="pr-1">Email:</strong>
-              <?php echo $email; ?>
+            <p <?php if (empty($profRegNo))
+              echo 'style="display:none"'; ?> class="mb-0"><strong
+                class="pr-1">Registration No:</strong>
+              <?php echo $profRegNo; ?>
             </p>
-            <p class="mb-0"><strong class="pr-1">Contact No:</strong> <?php echo $contact; ?> </p>
+            <p class="mb-0"><strong class="pr-1">Email:</strong> <?php echo $email; ?> </p>
+            <p class="mb-0"><strong class="pr-1">Contact No:</strong>
+              <?php echo $contact; ?>
+            </p>
           </div>
         </div>
       </div>
@@ -79,40 +96,40 @@ $skills = $tradesman->getSkills();
                   <th width="30%">Trade Type</th>
                   <td width="2%">:</td>
                   <td><input <?php echo $isReadonly ?> type="text" name="trade_type" size="20" autofocus value="<?php if (isset($_POST['trade_type']))
-                       echo $_POST['trade_type'];
-                     else
-                       echo $tType ?>"></td>
+                        echo $_POST['trade_type'];
+                      else
+                        echo $tType ?>"></td>
                   </tr>
                   <tr>
                     <th width="30%">Location </th>
                     <td width="2%">:</td>
                     <td><input <?php echo $isReadonly ?> type="text" name="location" size="20" value="<?php if (isset($_POST['location']))
-                         echo $_POST['location'];
-                       else
-                         echo $loc ?>"></td>
+                          echo $_POST['location'];
+                        else
+                          echo $loc ?>"></td>
                   </tr>
                   <tr>
                     <th width="30%">Hourly Rate (£)</th>
                     <td width="2%">:</td>
                     <td><input <?php echo $isReadonly ?> type="text" name="hour_rate" size="20" value="<?php if (isset($_POST['hour_rate']))
-                         echo $_POST['hour_rate'];
-                       else
-                         echo $hourlyRate ?>"></td>
+                          echo $_POST['hour_rate'];
+                        else
+                          echo $hourlyRate ?>"></td>
                   </tr>
                   <tr>
                     <th width="30%">Skills</th>
                     <td width="2%">:</td>
                     <td><input <?php echo $isReadonly ?> type="text" name="skills" size="20" value="<?php if (isset($_POST['skills']))
-                         echo $_POST['skills'];
-                       else
-                         echo $skills ?>"></td>
+                          echo $_POST['skills'];
+                        else
+                          echo $skills ?>"></td>
                   </tr>
 
                 </table>
               </div>
               <div class="button-section">
                 <button <?php if ($_SESSION['actor']['is_tradesman'] == 0)
-                         echo 'style="display:none"'; ?> class="sumit-btn"
+                          echo 'style="display:none"'; ?> class="sumit-btn"
                 name="submit" type="submit">Update</button>
             </div>
           </div>

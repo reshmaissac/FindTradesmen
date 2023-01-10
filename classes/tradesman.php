@@ -10,6 +10,8 @@ class Tradesman extends User
     private $skills;
     private $availability;
 
+    private $professionalRegNo;
+
     private $previousWorks = array();
     private $bookedDates = array();
 
@@ -85,6 +87,16 @@ class Tradesman extends User
         $this->availability = $availability;
         return $this;
     }
+    public function getProfessionalRegNo()
+    {
+        return $this->professionalRegNo;
+    }
+
+    public function setProfessionalRegNo($professionalRegNo): self
+    {
+        $this->professionalRegNo = $professionalRegNo;
+        return $this;
+    }
     public function createAccount()
     {
         //1. insert into users table
@@ -97,9 +109,10 @@ class Tradesman extends User
             $tType = $this->getDbc()->real_escape_string($this->getTradeType());
             $loc = $this->getDbc()->real_escape_string($this->getLocation());
             $hrRate = $this->getDbc()->real_escape_string($this->getHourlyRate());
+            $profRegNo = $this->getDbc()->real_escape_string($this->getProfessionalRegNo());
             $skill = $this->getDbc()->real_escape_string($this->getSkills());
-            $q = "INSERT INTO tradesmen (trade_type, location, hourly_rate, skills, user_id) 
-            VALUES ('$tType', '$loc', '$hrRate', '$skill', '$tId')";
+            $q = "INSERT INTO tradesmen (trade_type, location, hourly_rate, skills, user_id,professional_reg) 
+            VALUES ('$tType', '$loc', '$hrRate', '$skill', '$tId', '$profRegNo')";
             $r = $this->getDbc()->query($q);
 
             // $this->dbc->close();
@@ -109,7 +122,7 @@ class Tradesman extends User
     public function retrieveProfile($tId)
     {
         $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,
-        u.last_name,u.email, u.contact_no
+        u.last_name,u.email, u.contact_no, t.professional_reg
         FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE t.user_id = $tId ;";
         //echo $q;
         $result = mysqli_query($this->getDbc(), $q);
@@ -152,6 +165,7 @@ class Tradesman extends User
         $tradesman->setTradeType($row['trade_type']);
         $tradesman->setLocation($row['location']);
         $tradesman->setHourlyRate($row['hourly_rate']);
+        $tradesman->setProfessionalRegNo($row['professional_reg']);
         $tradesman->setSkills($row['skills']);
         if (null != $isAvailable) {
 
@@ -173,8 +187,8 @@ class Tradesman extends User
         }
 
         $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,
-        u.last_name,u.email,u.contact_no
-        FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE $condition $inner ;";
+        u.last_name,u.email,u.contact_no, t.professional_reg
+        FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE $condition $inner ORDER BY t.professional_reg DESC;";
         $result = mysqli_query($this->getDbc(), $q);
 
         $tradesmen_array = array();
@@ -184,7 +198,6 @@ class Tradesman extends User
             while ($row = $result->fetch_assoc()) {
                 $tradesman = new Tradesman();
                 if (!empty($date)) {
-                    // $inner = " AND t.user_id NOT IN (SELECT * FROM schedule s WHERE CAST(s.booked_date AS CHAR(10)) != $date)";
                     $isAvailable = $this->checkAvailability($date, $row['user_id']);
                 } else {
                     $isAvailable = true;
@@ -216,6 +229,7 @@ class Tradesman extends User
         }
         return $isAvailable;
     }
+
 
 }
 ?>

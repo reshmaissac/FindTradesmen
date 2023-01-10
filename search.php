@@ -1,7 +1,22 @@
 <?php
-include("includes/header.html");
-?>
 
+session_start();
+if (
+    isset($_SESSION['actor']['first_name']) &&
+    isset($_SESSION['actor']['last_name']) &&
+    isset($_SESSION['actor']['id'])
+) { // if the SESSION 'user_id' is  set...
+    $userId = $_SESSION['actor']['id'];
+    $page_title = "Welcome {$_SESSION['actor']['first_name']}";
+    include('includes/loggedin_header.html');
+
+    echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
+
+} else {
+    include('includes/header.html');
+
+}
+?>
 <div class="grid-container">
     <table class="table">
         <thead class="thead-light">
@@ -13,6 +28,7 @@ include("includes/header.html");
                 <th scope="col">Hourly Rate (£)</th>
                 <th scope="col">Skills</th>
                 <th scope="col">Availability</th>
+                <th scope="col">Pro Registration</th>
                 <th scope="col">View</th>
             </tr>
         </thead>
@@ -46,28 +62,27 @@ include("includes/header.html");
                         echo '<table class="table table-bordered">';
                         //loop tradesmen data
                         for ($i = 0; $i < count($resultList); $i++) {
-                            
-                            $tardesman = $resultList[$i];
+
+                            $tradesman = $resultList[$i];
                             echo '<tr>'
-                                . '<td>' . $tardesman->getFName() . '</td>'
-                                . '<td>' . $tardesman->getLName() . '</td>'
-                                . '<td>' . $tardesman->getEmail() . '</td>'
-                                . '<td>' . $tardesman->getTradeType() . '</td>'
-                                . '<td>' . $tardesman->getHourlyRate() . '</td>'
-                                . '<td>' . $tardesman->getSkills() . '</td>';
-                            if ($tardesman->getAvailability() == 1) {
+                                . '<td>' . $tradesman->getFName() . '</td>'
+                                . '<td>' . $tradesman->getLName() . '</td>'
+                                . '<td>' . $tradesman->getEmail() . '</td>'
+                                . '<td>' . $tradesman->getTradeType() . '</td>'
+                                . '<td>' . $tradesman->getHourlyRate() . '</td>'
+                                . '<td>' . $tradesman->getSkills() . '</td>';
+                            if ($tradesman->getAvailability() == 1) {
                                 echo '<td><button class="available" type="button" disabled>Available</button></td>';
                             } else {
 
                                 echo '<td><button class="not-available" type="button" disabled>Booked</button></td>';
                             }
-                            
+                            echo '<td>' . $tradesman->getProfessionalRegNo() . '</td>';
                             echo '<td>'
-                            .'<form action="view_tradesmen_profile.php" method="post">'
-                            .'<button name="view-id" type="submit" value="'.$tardesman->getUId().'">View</button>'
-                            .'</form>'
-                            .'</td>';
-                            //echo '<td>' . $tardesman->getAvailability() . '</td>'
+                                . '<form action="view_tradesmen_profile.php" method="post">'
+                                . '<button name="view-id" type="submit" value="' . $tradesman->getUId() . '">View</button>'
+                                . '</form>'
+                                . '</td>';
                             echo '</tr>';
                         }
                         echo '</table>';
