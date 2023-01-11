@@ -37,6 +37,12 @@
                 $_SESSION['authenticated'] = true;
                 if ($_SESSION['actor']['is_tradesman'] == 1) {
                     load('view_tradesmen_profile.php');
+                } else if (
+                    $_SESSION['actor']['is_tradesman'] == 0
+                    && $_SESSION['actor']['first_name'] == "admin"
+                    && $_SESSION['actor']['last_name'] == "admin"
+                ) {
+                    load("admin_view.php");
                 } else {
 
                     load('index.php');

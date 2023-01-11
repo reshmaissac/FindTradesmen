@@ -102,7 +102,7 @@ class User extends DBConnection
         $q = "SELECT user_id, first_name, last_name, is_tradesman 
         FROM users 
         WHERE email='$e' AND pass=SHA1('$p')";
-        
+
         $r = $this->dbc->query($q);
         if ($r->num_rows == 1) {
             $row = $r->fetch_array(MYSQLI_ASSOC);
@@ -131,5 +131,30 @@ class User extends DBConnection
         $this->isTradesman = $isTradesman;
         return $this;
     }
+
+    public function getAllUsers()
+    {
+        $q = "SELECT * FROM users";
+
+        $result = $this->dbc->query($q);
+        $users_array = array();
+        if (null != $result && $result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                $user = new User();
+                $user->setFName($row['first_name']);
+                $user->setLName($row['last_name']);
+                $user->setEmail($row['email']);
+                $user->setContactNo($row['contact_no']);
+                $user->setIsTradesman($row['is_tradesman']);
+
+                $users_array[] = $user;
+
+            }
+        }
+        return $users_array;
+    }
+
+
 }
 ?>

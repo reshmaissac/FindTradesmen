@@ -1,24 +1,8 @@
 <div class="container">
 
 	<?php
-
-	session_start();
-	if (
-		isset($_SESSION['actor']['first_name']) &&
-		isset($_SESSION['actor']['last_name']) &&
-		isset($_SESSION['actor']['id'])
-	) { 
-		
-		$page_title = "Welcome {$_SESSION['actor']['first_name']}";
-		include('includes/loggedin_header.html');
-
-		echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
-
-	} else {
-		include('includes/header.html');
-		require('login_tools.php');
-		load();
-	}
+	include_once("session.php");
+	loadUpdatePermissions();
 	?>
 	<?php
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -54,7 +38,7 @@
 
 		//if no errors, update tradesman table
 		if (empty($errors)) {
-			
+
 			if ($tradesman->updateProfile($userId)) {
 				echo '<h1>Profile Updated!</h1>';
 				echo '<a href="view_tradesmen_profile.php">

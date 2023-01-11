@@ -1,70 +1,54 @@
 <div class="container">
-<?php
+  <?php
+  include_once("session.php");
+  loadViewProfilePermission();
+  ?>
+  <?php
+  include "classes/tradesman.php";
+  //get loggedin id and retrieve tradesmen profile.
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (($_SESSION['actor']['is_tradesman'] == 0)) {
+      $userId = $_SESSION['actor']['id'];
+      if (isset($_POST['view-id'])) {
+        $tId = $_POST['view-id'];
+      }
+      $isReadonly = 'readonly="readonly"';
+    } else {
 
-session_start();
-if (
-  isset($_SESSION['actor']['first_name']) &&
-  isset($_SESSION['actor']['last_name']) &&
-  isset($_SESSION['actor']['id'])
-) { 
-  $page_title = "Welcome {$_SESSION['actor']['first_name']}";
-  include('includes/loggedin_header.html');
-
-  echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
-
-} else {
-  include('includes/header.html');
-  require('login_tools.php');
-  load();
-
-}
-?>
-<?php
-include "classes/tradesman.php";
-//get loggedin id and retrieve tradesmen profile.
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (($_SESSION['actor']['is_tradesman'] == 0)) {
-    $userId = $_SESSION['actor']['id'];
-    if (isset($_POST['view-id'])) {
-      $tId = $_POST['view-id'];
-    }
-    $isReadonly = 'readonly="readonly"';
-  } else {
-
-    echo "<br/><br/>You are logged in as a tradesman.  Please login as a user to search and view other tradesman profiles.";
-    echo '<a href="view_tradesmen_profile.php">
+      echo "<br/><br/>You are logged in as a tradesman.  Please login as a user to search and view other tradesman profiles.";
+      echo '<a href="view_tradesmen_profile.php">
     <input style="width:148px;" class="css-input-btn-login" type="submit" value="View Your Profile"/>
 </a>';
 
-    return;
+      return;
+    }
+
+  } else {
+    $tId = $_SESSION['actor']['id'];
+    $isReadonly = '';
   }
 
-} else {
-  $tId = $_SESSION['actor']['id'];
-  $isReadonly = '';
-}
-
-$tradesman = new Tradesman();
-$tradesman = $tradesman->retrieveProfile($tId);
-$fName = $tradesman->getFName();
-$lName = $tradesman->getLName();
-$email = $tradesman->getEmail();
-$contact = $tradesman->getContactNo();
-$profRegNo = $tradesman->getProfessionalRegNo();
-$tType = $tradesman->getTradeType();
-$loc = $tradesman->getLocation();
-$hourlyRate = $tradesman->getHourlyRate();
-$skills = $tradesman->getSkills();
+  $tradesman = new Tradesman();
+  $tradesman = $tradesman->retrieveProfile($tId);
+  $fName = $tradesman->getFName();
+  $lName = $tradesman->getLName();
+  $email = $tradesman->getEmail();
+  $contact = $tradesman->getContactNo();
+  $profRegNo = $tradesman->getProfessionalRegNo();
+  $tType = $tradesman->getTradeType();
+  $loc = $tradesman->getLocation();
+  $hourlyRate = $tradesman->getHourlyRate();
+  $skills = $tradesman->getSkills();
 
   include_once("classes/rating.php");
   $rating = new Rating();
   $rating->setTId($tId);
   $avgRating = $rating->retrieveAvgRatings();
 
-?>
+  ?>
 
-<div class="t-profile py-4">
-  
+  <div class="t-profile py-4">
+
     <div class="row">
       <div class="col-lg-4">
         <div class="card shadow-sm">
@@ -74,11 +58,11 @@ $skills = $tradesman->getSkills();
               <?php echo $fName . " " . $lName; ?>
             </h3>
             <h4 class="text-warning mt-4 mb-4">
-    						<b><span id="average_rating"><?php echo round($avgRating,1); ?></span> / 5</b>
-    					</h4>
+              <b><span id="average_rating"><?php echo round($avgRating, 1); ?></span> / 5</b>
+            </h4>
           </div>
           <div class="card-body">
-          
+
             <p class="mb-0"><strong class="pr-1">Tradesman ID:</strong>
               <?php echo $tId; ?>
             </p>
@@ -91,7 +75,7 @@ $skills = $tradesman->getSkills();
             <p class="mb-0"><strong class="pr-1">Contact No:</strong>
               <?php echo $contact; ?>
             </p>
-            
+
           </div>
         </div>
       </div>
@@ -155,14 +139,14 @@ $skills = $tradesman->getSkills();
 
       </div>
     </div>
-  
-</div>
+
+  </div>
 
 
-<?php
-include("rate_tradesman.php");
-include('includes/footer.html');
-?>
+  <?php
+  include("rate_tradesman.php");
+  include('includes/footer.html');
+  ?>
 
 
 </div>

@@ -1,30 +1,7 @@
 <div class="container">
   <?php
-  session_start();
-  if (
-    isset($_SESSION['actor']['first_name']) &&
-    isset($_SESSION['actor']['last_name']) &&
-    isset($_SESSION['actor']['id'])
-  ) {
-    $page_title = "Welcome {$_SESSION['actor']['first_name']}";
-    include('includes/loggedin_header.html');
-
-    echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
-
-    if ($_SESSION['actor']['is_tradesman'] == 1) {
-
-      echo '<a href="view_tradesmen_profile.php">
-      <input class="css-input-btn-login" type="submit" value="View Profile"/>
-  </a>';
-
-    }
-
-  } else {
-    include('includes/header.html');
-
-  }
-
-
+  include_once("session.php");
+  loadIndexSession();
   ?>
 
 
