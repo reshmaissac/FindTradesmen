@@ -7,8 +7,8 @@
 		isset($_SESSION['actor']['first_name']) &&
 		isset($_SESSION['actor']['last_name']) &&
 		isset($_SESSION['actor']['id'])
-	) { // if the SESSION 'user_id' is  set...
-		$userId = $_SESSION['actor']['id'];
+	) { 
+		
 		$page_title = "Welcome {$_SESSION['actor']['first_name']}";
 		include('includes/loggedin_header.html');
 
@@ -18,8 +18,6 @@
 		include('includes/header.html');
 		require('login_tools.php');
 		load();
-
-		//include('includes/header.html');
 	}
 	?>
 	<?php
@@ -28,6 +26,7 @@
 		$errors = array();
 		$tradesman = new Tradesman();
 		$tradesman->setIsTradesman(1);
+		$userId = $_SESSION['actor']['id'];
 
 		if (empty($_POST['trade_type'])) {
 			$errors[] = 'Enter your trade type.';
@@ -55,7 +54,7 @@
 
 		//if no errors, update tradesman table
 		if (empty($errors)) {
-			echo "id - " . $userId;
+			
 			if ($tradesman->updateProfile($userId)) {
 				echo '<h1>Profile Updated!</h1>';
 				echo '<a href="view_tradesmen_profile.php">

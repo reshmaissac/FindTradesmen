@@ -1,7 +1,6 @@
 <div class="container">
     <?php include("includes/header.html");
     include("classes/user.php");
-
     ?>
     <?php
 
@@ -36,7 +35,6 @@
                     'is_tradesman' => $data['is_tradesman']
                 ];
                 $_SESSION['authenticated'] = true;
-                //header('location:home.php');
                 if ($_SESSION['actor']['is_tradesman'] == 1) {
                     load('view_tradesmen_profile.php');
                 } else {
@@ -62,16 +60,10 @@
 
         }
 
-
-
-
     }
     ?>
 
-
     <!--  -->
-
-
     <div class="form-style">
         <h1>Login Now!</h1>
 

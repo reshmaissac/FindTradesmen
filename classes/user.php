@@ -1,6 +1,5 @@
 <?php
 require('includes/connect_db.php');
-//include "includes/connect_db.php";
 class User extends DBConnection
 {
     private $userId;
@@ -65,7 +64,6 @@ class User extends DBConnection
     }
     public function setPassword($var1)
     {
-        //$hash = password_hash($var1, PASSWORD_DEFAULT);
         $this->password = $var1;
     }
     public function getPassword()
@@ -85,7 +83,7 @@ class User extends DBConnection
         $q = "INSERT INTO users (first_name, last_name, email, contact_no, pass, is_tradesman, reg_date) 
 						 VALUES ('$fname', '$lname', '$e', '$contact', SHA1('$pswd'),$isTrdman, NOW() )";
         $r = $this->dbc->query($q);
-        
+
         return $r;
     }
     public function checkIfUserExists()
@@ -93,7 +91,6 @@ class User extends DBConnection
         $e = $this->dbc->real_escape_string($this->getEmail());
         $q = "SELECT user_id FROM users WHERE email='$e'";
         $r = $this->dbc->query($q);
-        // $this->dbc->close();
         return $r;
     }
 
@@ -105,7 +102,7 @@ class User extends DBConnection
         $q = "SELECT user_id, first_name, last_name, is_tradesman 
         FROM users 
         WHERE email='$e' AND pass=SHA1('$p')";
-        //echo $q;
+        
         $r = $this->dbc->query($q);
         if ($r->num_rows == 1) {
             $row = $r->fetch_array(MYSQLI_ASSOC);

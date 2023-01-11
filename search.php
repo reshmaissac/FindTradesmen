@@ -5,8 +5,7 @@ if (
     isset($_SESSION['actor']['first_name']) &&
     isset($_SESSION['actor']['last_name']) &&
     isset($_SESSION['actor']['id'])
-) { // if the SESSION 'user_id' is  set...
-    $userId = $_SESSION['actor']['id'];
+) {
     $page_title = "Welcome {$_SESSION['actor']['first_name']}";
     include('includes/loggedin_header.html');
 

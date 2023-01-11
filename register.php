@@ -1,12 +1,8 @@
 <div class="container">
     <?php include("includes/header.html") ?>
 
-
-
     <div class="row">
-
         <div class="register-text-block">
-
             <div class="column">
                 <a href="register_user.php">
                     <div class="register-text-block-1">
@@ -24,7 +20,6 @@
                     </div>
                 </a>
 
-
             </div>
 
             <p>Already have an account? <a href="">Log In</a></p>
@@ -33,9 +28,7 @@
 
     </div>
 
-
     <div style="height: 55px;"></div>
-
 
 </div>
 

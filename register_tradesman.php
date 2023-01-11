@@ -14,26 +14,24 @@
 			$errors[] = 'Enter your first name.';
 		} else {
 			$tradesman->setFName(trim($_POST['first_name']));
-			// $fn = trim($_POST['first_name']); 
+			
 		}
 		if (empty($_POST['last_name'])) {
 			$errors[] = 'Enter your last name.';
 		} else {
 			$tradesman->setLName(trim($_POST['last_name']));
 
-			//$ln = trim($_POST['last_name']); 
 		}
 		if (empty($_POST['email'])) {
 			$errors[] = 'Enter your email.';
 		} else {
 			$tradesman->setEmail(trim($_POST['email']));
-			//$e = $dbc->real_escape_string(trim($_POST['email'])); 
+			
 		}
 		if (empty($_POST['contact_no'])) {
 			$errors[] = 'Enter your contact no.';
 		} else {
 			$tradesman->setContactNo(trim($_POST['contact_no']));
-			//$e = $dbc->real_escape_string(trim($_POST['email'])); 
 		}
 
 		if (empty($_POST['trade_types'])) {
@@ -68,7 +66,6 @@
 				$errors[] = 'Passwords do not match.';
 			} else {
 				$tradesman->setPassword(trim($_POST['pass1']));
-				//$p = $dbc->real_escape_string(trim($_POST['pass1']));
 			}
 		} else {
 			$errors[] = 'Enter your password.';
@@ -103,11 +100,6 @@
 
 		}
 
-
-
-
-
-
 	}
 	?>
 	<!-- ............................................. -->
@@ -133,9 +125,7 @@
 					echo $_POST['email']; ?>" placeholder="Email Address">
 				<input type="text" name="contact_no" size="50" value="<?php if (isset($_POST['contact_no']))
 					echo $_POST['contact_no']; ?>" placeholder="Contact No">
-
 			</div>
-
 
 			<div class="section"><span>3</span>Your trade Details</div>
 			<div class="inner-wrap">
@@ -157,8 +147,6 @@
 
 			</div>
 
-
-
 			<div class="section"><span>4</span>Passwords</div>
 			<div class="inner-wrap">
 
@@ -175,7 +163,6 @@
 		</form>
 
 	</div>
-
 
 	<!-- ............................................. -->
 </div>

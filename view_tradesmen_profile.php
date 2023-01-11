@@ -1,3 +1,4 @@
+<div class="container">
 <?php
 
 session_start();
@@ -5,8 +6,7 @@ if (
   isset($_SESSION['actor']['first_name']) &&
   isset($_SESSION['actor']['last_name']) &&
   isset($_SESSION['actor']['id'])
-) { // if the SESSION 'user_id' is  set...
-  $userId = $_SESSION['actor']['id'];
+) { 
   $page_title = "Welcome {$_SESSION['actor']['first_name']}";
   include('includes/loggedin_header.html');
 
@@ -17,7 +17,6 @@ if (
   require('login_tools.php');
   load();
 
-  //include('includes/header.html');
 }
 ?>
 <?php
@@ -25,7 +24,7 @@ include "classes/tradesman.php";
 //get loggedin id and retrieve tradesmen profile.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (($_SESSION['actor']['is_tradesman'] == 0)) {
-
+    $userId = $_SESSION['actor']['id'];
     if (isset($_POST['view-id'])) {
       $tId = $_POST['view-id'];
     }
@@ -57,10 +56,15 @@ $loc = $tradesman->getLocation();
 $hourlyRate = $tradesman->getHourlyRate();
 $skills = $tradesman->getSkills();
 
+  include_once("classes/rating.php");
+  $rating = new Rating();
+  $rating->setTId($tId);
+  $avgRating = $rating->retrieveAvgRatings();
+
 ?>
 
 <div class="t-profile py-4">
-  <div class="container">
+  
     <div class="row">
       <div class="col-lg-4">
         <div class="card shadow-sm">
@@ -69,9 +73,15 @@ $skills = $tradesman->getSkills();
             <h3>
               <?php echo $fName . " " . $lName; ?>
             </h3>
+            <h4 class="text-warning mt-4 mb-4">
+    						<b><span id="average_rating"><?php echo round($avgRating,1); ?></span> / 5</b>
+    					</h4>
           </div>
           <div class="card-body">
-            <p class="mb-0"><strong class="pr-1">Tradesman ID:</strong> <?php echo $tId; ?> </p>
+          
+            <p class="mb-0"><strong class="pr-1">Tradesman ID:</strong>
+              <?php echo $tId; ?>
+            </p>
             <p <?php if (empty($profRegNo))
               echo 'style="display:none"'; ?> class="mb-0"><strong
                 class="pr-1">Registration No:</strong>
@@ -81,6 +91,7 @@ $skills = $tradesman->getSkills();
             <p class="mb-0"><strong class="pr-1">Contact No:</strong>
               <?php echo $contact; ?>
             </p>
+            
           </div>
         </div>
       </div>
@@ -132,25 +143,27 @@ $skills = $tradesman->getSkills();
                           echo 'style="display:none"'; ?> class="sumit-btn"
                 name="submit" type="submit">Update</button>
             </div>
+            <div <?php if ($_SESSION['actor']['is_tradesman'] == 1)
+              echo 'style="display:none"'; ?>class="col-sm-4 text-center">
+              <button type="button" name="add_review" id="add_review" class="btn btn-primary">Rate</button>
+            </div>
           </div>
 
+
         </form>
-        <!-- <div style="height: 26px"></div> -->
-        <!-- <div class="card shadow-sm">
-            <div class="card-header bg-transparent border-0">
-              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Other Information</h3>
-            </div>
-            <div class="card-body pt-0">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-          </div> -->
+
+
       </div>
     </div>
-  </div>
+  
 </div>
 
 
 <?php
-
+include("rate_tradesman.php");
 include('includes/footer.html');
 ?>
+
+
+</div>
+<!--  -->

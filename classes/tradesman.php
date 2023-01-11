@@ -115,7 +115,6 @@ class Tradesman extends User
             VALUES ('$tType', '$loc', '$hrRate', '$skill', '$tId', '$profRegNo')";
             $r = $this->getDbc()->query($q);
 
-            // $this->dbc->close();
             return $r;
         }
     }
@@ -124,7 +123,7 @@ class Tradesman extends User
         $q = "SELECT t.trade_type,t.location,t.hourly_rate, t.skills,t.user_id,u.first_name,
         u.last_name,u.email, u.contact_no, t.professional_reg
         FROM  tradesmen t JOIN  users u  ON t.user_id = u.user_id WHERE t.user_id = $tId ;";
-        //echo $q;
+        
         $result = mysqli_query($this->getDbc(), $q);
         if (null != $result && $result->num_rows > 0) {
 
@@ -145,9 +144,7 @@ class Tradesman extends User
         WHERE user_id = $tId;";
         $r = $this->getDbc()->query($q);
 
-        // $this->dbc->close();
         return $r;
-
 
     }
 
@@ -194,7 +191,6 @@ class Tradesman extends User
         $tradesmen_array = array();
         if (null != $result && $result->num_rows > 0) {
 
-
             while ($row = $result->fetch_assoc()) {
                 $tradesman = new Tradesman();
                 if (!empty($date)) {
@@ -209,7 +205,6 @@ class Tradesman extends User
             }
         }
 
-        // $this->dbc->close();
         return $tradesmen_array;
     }
     public function searchByPin($tId)
@@ -229,7 +224,6 @@ class Tradesman extends User
         }
         return $isAvailable;
     }
-
 
 }
 ?>
