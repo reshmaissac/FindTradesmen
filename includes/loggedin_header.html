@@ -23,7 +23,14 @@
 
     <li style="padding-left: 20px;">
       <form class="search_form" action="search.php" method="get">
-        <input type="text" class="css-input" name="trade" placeholder="Trade (e.g. Electrician)">
+        <!-- <input type="text" class="css-input" name="trade" placeholder="Trade (e.g. Electrician)"> -->
+        <select id="trade" name="trade">
+          <option value="Select">Select</option>
+          <option value="Electrician">Electrician</option>
+          <option value="Plumber">Plumber</option>
+          <option value="Builder">Builder</option>
+          <option value="Carpenter">Carpenter</option>
+        </select>
         <input type="text" class="css-input" name="location" placeholder="Location (e.g. Sheffield)">
         <input type="date" class="css-input" name="work_date">
 

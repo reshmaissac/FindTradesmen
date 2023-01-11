@@ -39,11 +39,11 @@ if (
 
                 $errors = array();
                 $tradesmen = new Tradesman();
-                if ((empty($_GET['trade']) && empty($_GET['location'])) && isset($_GET['work_date'])) {
+                if (((empty($_GET['trade']) || $_GET['trade'] == "Select") && empty($_GET['location'])) && isset($_GET['work_date'])) {
                     $errors[] = 'Enter trade type or location to find a trader';
                 }
-                if (isset($_GET['trade'])) {
-
+                if (isset($_GET['trade']) && $_GET['trade'] != "Select") {
+                    echo $_GET['trade'];
                     $tradesmen->setTradeType(strtolower(trim($_GET['trade'])));
                 }
                 if (isset($_GET['location'])) {
