@@ -10,11 +10,13 @@
 
 <body>
 
-  <h1 class="heading-logo"><a href="/FindTradesmen">Tradesmen</a></h1>
+  <!-- <h1 class="heading-logo"><a href="/FindTradesmen">Tradesmen</a></h1> -->
 
+ <a href="/FindTradesmen"> <img class="heading-logo" src="img/logo.png"></a>
+
+ 
+  <div class="heading">
   <ul class="heading-ul">
-
-
     <li><a href="about-us.php">ABOUT US</a></li>
 
     <li style="padding-left: 20px;"><a href="contact-us.php">CONTACT US</a></li>
@@ -22,7 +24,7 @@
     <li style="padding-left: 20px;">
       <form class="search_form" action="search.php" method="get">
         <!-- <input type="text" class="css-input" name="trade" placeholder="Trade (e.g. Electrician)"> -->
-        <select id="trade" name="trade">
+        <select class="css-input" id="trade" name="trade">
           <option value="Select">Select</option>
           <option value="Electrician">Electrician</option>
           <option value="Plumber">Plumber</option>
@@ -48,17 +50,9 @@
         <input type="submit" class="css-input-btn-signup" value="Sign Up">
       </form>
     </li>
-
   </ul>
+</div>
 
-
-
-  <!--
-  This script places a badge on your repl's full-browser view back to your repl's cover
-  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
-  teal, blue, blurple, magenta, pink!
-  -->
-  <!-- <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script> -->
 </body>
 
 </html>

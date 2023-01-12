@@ -1,4 +1,4 @@
-<div class="container">
+<div class="website-container">
 
 	<?php
 	session_start();
@@ -18,25 +18,27 @@
 			<table width="60%">
 				<tr>
 					<td>Name: </td>
-					<td><input type="text" name="name" size="30" maxlength="60" value="<?php if (isset($_POST['name']))
+					<td><input type="text" class="css-input" name="name" size="30" maxlength="60" value="<?php if (isset($_POST['name']))
 						echo $_POST['name']; ?>" /></td>
 				</tr>
 				<tr>
 					<td>Email Address: </td>
-					<td><input type="text" name="email" size="30" maxlength="80" value="<?php if (isset($_POST['email']))
+					<td><input type="text" class="css-input" name="email" size="30" maxlength="80" value="<?php if (isset($_POST['email']))
 						echo $_POST['email']; ?>" /></td>
 				</tr>
 				<tr>
 					<td>Enquiry: </td>
-					<td><textarea name="comments" rows="5" cols="30"><?php if (isset($_POST['comments']))
+					<td><textarea name="comments" class="css-input" rows="5" cols="30"><?php if (isset($_POST['comments']))
 						echo $_POST['comments']; ?></textarea></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" name="submit" value="Submit" /></td>
+					<td colspan="2"><input type="submit" class="css-input-btn" name="submit" value="Submit" /></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-</div>
+
 
 <?php include('includes/footer.html') ?>
+
+</div>

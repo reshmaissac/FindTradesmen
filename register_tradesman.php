@@ -1,4 +1,4 @@
-<div class="container">
+<div class="website-container">
 
 	<?php include "includes/header.html"
 		?>
@@ -14,7 +14,7 @@
 			$errors[] = 'Enter your first name.';
 		} else {
 			$tradesman->setFName(trim($_POST['first_name']));
-			
+
 		}
 		if (empty($_POST['last_name'])) {
 			$errors[] = 'Enter your last name.';
@@ -26,7 +26,7 @@
 			$errors[] = 'Enter your email.';
 		} else {
 			$tradesman->setEmail(trim($_POST['email']));
-			
+
 		}
 		if (empty($_POST['contact_no'])) {
 			$errors[] = 'Enter your contact no.';
@@ -83,9 +83,9 @@
 		if (empty($errors)) {
 
 			if ($tradesman->createAccount()) {
-				echo '<h1>Registered!</h1>
-				<p>You are now registered.</p>
-				<p><a href="login.php">Login</a></p>';
+				echo '<h1 class="register-txt">Registered!</h1>
+				<p >You are now registered.</p>
+				<p class="btn-login"><a href="login.php">Login</a></p>';
 			}
 
 			include('includes/footer.html');
@@ -102,7 +102,8 @@
 
 	}
 	?>
-	<!-- ............................................. -->
+
+
 
 	<div class="form-style">
 		<h1>Sign Up Now!<span>Looking for Works.</span></h1>
@@ -121,7 +122,7 @@
 			<div class="section"><span>2</span>Your Contact Details</div>
 			<div class="inner-wrap">
 
-				<input type="text" name="email" size="50" value="<?php if (isset($_POST['email']))
+				<input type="email" name="email" size="50" value="<?php if (isset($_POST['email']))
 					echo $_POST['email']; ?>" placeholder="Email Address">
 				<input type="text" name="contact_no" size="50" value="<?php if (isset($_POST['contact_no']))
 					echo $_POST['contact_no']; ?>" placeholder="Contact No">
@@ -150,10 +151,14 @@
 			<div class="section"><span>4</span>Passwords</div>
 			<div class="inner-wrap">
 
-				<input type="password" name="pass1" size="20" value="<?php if (isset($_POST['pass1']))
-					echo $_POST['pass1']; ?>" placeholder="Password">
-				<input type="password" name="pass2" size="20" value="<?php if (isset($_POST['pass2']))
-					echo $_POST['pass2']; ?>" placeholder="Confirm Password">
+				<input type="password" name="pass1" size="20" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+					title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"
+					value="<?php if (isset($_POST['pass1']))
+						echo $_POST['pass1']; ?>" placeholder="Password">
+				<input type="password" name="pass2" size="20" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+					title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"
+					value="<?php if (isset($_POST['pass2']))
+						echo $_POST['pass2']; ?>" placeholder="Confirm Password">
 
 			</div>
 
@@ -164,7 +169,6 @@
 
 	</div>
 
-	<!-- ............................................. -->
-</div>
+	<?php include "includes/footer.html" ?>
 
-<?php include "includes/footer.html" ?>
+</div>

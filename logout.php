@@ -1,3 +1,5 @@
+<div class="website-container">
+
 <?php 
 session_start();
 
@@ -15,3 +17,5 @@ echo "<h1>Goodbye!</h1>
 include ('includes/footer.html');
 
 ?>
+
+</div>

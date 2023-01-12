@@ -1,4 +1,4 @@
-<div class="container">
+<div class="website-container">
   <?php
   include_once("session.php");
   loadViewProfilePermission();
@@ -7,7 +7,7 @@
   include "classes/tradesman.php";
   //get loggedin id and retrieve tradesmen profile.
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (($_SESSION['actor']['is_tradesman'] == 0)) {
+    if (($_SESSION['actor']['is_tradesman'] == 0) || ($_SESSION['actor']['is_tradesman'] == 2)) {
       $userId = $_SESSION['actor']['id'];
       if (isset($_POST['view-id'])) {
         $tId = $_POST['view-id'];
@@ -129,7 +129,7 @@
             </div>
             <div <?php if ($_SESSION['actor']['is_tradesman'] == 1)
               echo 'style="display:none"'; ?>class="col-sm-4 text-center">
-              <button type="button" name="add_review" id="add_review" class="btn btn-primary">Rate</button>
+              <button type="button" name="add_review" id="add_review" class="rating-btn">Rate</button>
             </div>
           </div>
 
@@ -143,11 +143,9 @@
   </div>
 
 
+
   <?php
   include("rate_tradesman.php");
   include('includes/footer.html');
   ?>
-
-
 </div>
-<!--  -->

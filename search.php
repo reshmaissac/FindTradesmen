@@ -1,3 +1,5 @@
+<div class="website-container">
+
 <?php
 
 session_start();
@@ -9,7 +11,7 @@ if (
     $page_title = "Welcome {$_SESSION['actor']['first_name']}";
     include('includes/loggedin_header.html');
 
-    echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
+    echo "<h4 style='color:MediumSlateBlue'>You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}</h4>";
 
 } else {
     include('includes/header.html');
@@ -43,7 +45,6 @@ if (
                     $errors[] = 'Enter trade type or location to find a trader';
                 }
                 if (isset($_GET['trade']) && $_GET['trade'] != "Select") {
-                    echo $_GET['trade'];
                     $tradesmen->setTradeType(strtolower(trim($_GET['trade'])));
                 }
                 if (isset($_GET['location'])) {
@@ -99,6 +100,11 @@ if (
     </table>
 </div>
 
+
+ <div style="height: 365px;"></div>
+
+
 <?php
-include("includes/footer.html");
-?>
+include("includes/footer.html");?>
+
+</div>

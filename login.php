@@ -1,4 +1,4 @@
-<div class="container">
+<div class="website-container">
     <?php include("includes/header.html");
     include("classes/user.php");
     ?>
@@ -38,7 +38,7 @@
                 if ($_SESSION['actor']['is_tradesman'] == 1) {
                     load('view_tradesmen_profile.php');
                 } else if (
-                    $_SESSION['actor']['is_tradesman'] == 0
+                    $_SESSION['actor']['is_tradesman'] == 2
                     && $_SESSION['actor']['first_name'] == "admin"
                     && $_SESSION['actor']['last_name'] == "admin"
                 ) {
@@ -76,13 +76,10 @@
         <form action="login.php" method="post" class="form-signin" role="form">
 
             <div class="section"></div>
-            <label>User Email</label>
+           
+            <input type="text" name="email" placeholder="User Email"><br>
 
-            <input type="text" name="email"><br>
-
-            <label>Password</label>
-
-            <input type="password" name="password"><br>
+            <input type="password" name="password" placeholder="Password"><br>
 
             <button class="sumit-btn" name="submit" type="submit">Login</button>
         </form>
@@ -90,7 +87,9 @@
     </div>
 
 
-    <div style="height: 400px;"></div>
-</div>
+    <div style="height: 100px;"></div>
+
 
 <?php include("includes/footer.html") ?>
+
+</div>

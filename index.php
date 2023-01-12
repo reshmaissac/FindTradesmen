@@ -1,4 +1,4 @@
-<div class="container">
+<div class="website-container">
   <?php
   include_once("session.php");
   loadIndexSession();
@@ -10,9 +10,13 @@
     <div class="column">
 
       <div class="home-text-block">
-        <h2>How work should work</h2>
-        <p>Forget the old rules. You can have the best people. Right now. Right here. We take the hassle out of finding
-          a great local builder or tradesman.</p>
+        <h2>The best way to do work</h2>
+        <p>Throw out the outdated guidelines. You might employ the top talent. right now. Right moment. We make it simple to identify a fantastic local neighborhood builder or tradesperson.</p>
+        <p>&#x2713; Carpenter</p>
+        <p>&#x2713; Electrician</p>
+        <p>&#x2713; Plumber</p>
+        <p>&#x2713; Welder</p>
+        <p>&#x2713; Painter</p>
       </div>
 
     </div>
@@ -24,9 +28,9 @@
 
   </div>
 
-  <div style="height: 105px;"></div>
-</div>
+  <div style="height: 65px;"></div>
 
-<?php
-include("includes/footer.html")
-  ?>
+
+<?php include("includes/footer.html")?>
+
+</div>

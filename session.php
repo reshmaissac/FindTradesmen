@@ -11,7 +11,7 @@ function loadIndexSession()
         $page_title = "Welcome {$_SESSION['actor']['first_name']}";
         include('includes/loggedin_header.html');
 
-        echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
+        echo "<h3 style='color:MediumSlateBlue'>You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}</h3>";
 
         if ($_SESSION['actor']['is_tradesman'] == 1) {
 
@@ -21,7 +21,7 @@ function loadIndexSession()
 
         } else if (
             isset($_SESSION['actor']) && (
-                $_SESSION['actor']['is_tradesman'] == 0
+                $_SESSION['actor']['is_tradesman'] == 2
                 && $_SESSION['actor']['first_name'] == "admin"
                 && $_SESSION['actor']['last_name'] == "admin")
         ) {
@@ -49,7 +49,7 @@ function loadUpdatePermissions()
         $page_title = "Welcome {$_SESSION['actor']['first_name']}";
         include('includes/loggedin_header.html');
 
-        echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
+        echo "<h4 style='color:MediumSlateBlue'>You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}</h4>";
         if (($_SESSION['actor']['is_tradesman'] == 0)) {
             include_once('login_tools.php');
             load("index.php");
@@ -75,7 +75,7 @@ function loadViewProfilePermission()
         $page_title = "Welcome {$_SESSION['actor']['first_name']}";
         include('includes/loggedin_header.html');
 
-        echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
+        echo "<h6 style='color:MediumSlateBlue'>You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}</h6>";
         if (($_SESSION['actor']['is_tradesman'] == 0) && (!isset($_POST['view-id']))) {
             require_once('login_tools.php');
             load("index.php");
@@ -94,14 +94,15 @@ function loadAdminPermissions()
     session_start();
     if (
         isset($_SESSION['actor']) && (
-            $_SESSION['actor']['is_tradesman'] == 0
+            $_SESSION['actor']['is_tradesman'] == 2
             && $_SESSION['actor']['first_name'] == "admin"
             && $_SESSION['actor']['last_name'] == "admin")
     ) {
         $page_title = "Welcome {$_SESSION['actor']['first_name']}";
         include('includes/loggedin_header.html');
 
-        echo "You are now logged in, {$_SESSION['actor']['first_name']}";
+        //echo "You are now logged in, {$_SESSION['actor']['first_name']}";
+        echo "<h3 style='color:MediumSlateBlue'>You are now logged in, {$_SESSION['actor']['first_name']}</h3>";
 
     } else {
         include('includes/header.html');
@@ -122,7 +123,7 @@ function loadSearchPermissions()
         $page_title = "Welcome {$_SESSION['actor']['first_name']}";
         include('includes/loggedin_header.html');
 
-        echo "You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}";
+        echo "<h3 style='color:MediumSlateBlue'>You are now logged in, {$_SESSION['actor']['first_name']} {$_SESSION['actor']['last_name']}</h3>";
 
     } else {
         include('includes/header.html');

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="website-container">
     <?php include("includes/header.html") ?>
 
     <div class="row">
@@ -22,14 +22,16 @@
 
             </div>
 
-            <p>Already have an account? <a href="">Log In</a></p>
+            <p>Already have an account? <a href="login.php">Log In</a></p>
 
         </div>
 
     </div>
 
-    <div style="height: 55px;"></div>
+    <div style="height: 20px;"></div>
 
-</div>
 
 <?php include("includes/footer.html") ?>
+
+
+</div>
